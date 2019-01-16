@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <title>就活Cross</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  </head>
+
+  <body>
+   <header>
+     <div class="logo">
+      <img src="/top/top.jpg" width="30"height="30"alt="ロゴ">
+    </div>
+      <h1>
+        <%=link_to("就活Cross","/top")%>
+      </h1>
+     <ul>
+     <li>
+      <%=link_to("みんなとCrossしよう！","/about")%>
+     </li>
+      <% if   @current_user %>
+
+             <% current_user=User.find_by(id:session[:user_id]) %>
+             <li>
+               <%= link_to(@current_user.name,"/users/#{current_user.id}") %>
+             </li>
+             <li>
+             <%=link_to("新規投稿","/posts/new")%>
+             </li>
+             <li>
+             <%=link_to("投稿一覧","/posts/index")%>
+             </li>
+             <li>
+             <%=link_to("ユーザー検索","/users/index")%>
+             </li>
+             <li>
+             <%= link_to("ログアウト", "/logout", {method: :post}) %>
+             </li>
+        <% else %>
+              <li>
+                <%=link_to("新規登録","/signup")%>
+              </li>
+              <li>
+                <%=link_to("ログイン","/login")%>
+              </li>
+        <% end %>
+
+     </ul>
+
+   </header>
+    <% if flash[:notice] %>
+    <div class="flash">
+      <%= flash[:notice] %>
+    </div>
+    <% end %>
+
+<br>
+
+    <%= yield %>
+
+  <footer>
+    <p>(c)cross project</p>
+  </footer>
+
+  </body>
+</html>
